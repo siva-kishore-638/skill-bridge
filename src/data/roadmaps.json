@@ -1,0 +1,1252 @@
+[
+  {
+    "id": "frontend-developer",
+    "title": "Frontend Developer",
+    "shortTitle": "Frontend",
+    "category": "Technology",
+    "icon": "Code2",
+    "tagline": "Turn ideas into polished, interactive web experiences.",
+    "duration": "16 weeks",
+    "description": "Learn how the web works, build responsive interfaces, and publish a portfolio that proves your skills.",
+    "color": "violet",
+    "lessons": [
+      {
+        "id": "html-foundations",
+        "title": "HTML foundations",
+        "duration": "4 hours",
+        "description": "Understand semantic HTML, page structure, forms, links, and accessible markup.",
+        "videoTitle": "HTML Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=kUMe1FH4CHE",
+        "skills": [
+          "Semantic HTML",
+          "Forms and links",
+          "Accessible structure"
+        ],
+        "practice": "Build a personal profile page with headings, a contact form, and useful links."
+      },
+      {
+        "id": "css-layout",
+        "title": "CSS and layout",
+        "duration": "6 hours",
+        "description": "Style interfaces with selectors, the box model, Flexbox, Grid, and reusable design tokens.",
+        "videoTitle": "CSS Tutorial - Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=OXGznpKZ_sA",
+        "skills": [
+          "Box model",
+          "Flexbox and Grid",
+          "Design tokens"
+        ],
+        "practice": "Recreate a clean pricing card and a responsive navigation bar."
+      },
+      {
+        "id": "javascript-basics",
+        "title": "JavaScript essentials",
+        "duration": "8 hours",
+        "description": "Write variables, functions, conditions, loops, arrays, objects, and DOM interactions.",
+        "videoTitle": "JavaScript Programming - Full Course",
+        "youtubeUrl": "https://www.youtube.com/watch?v=PkZNo7MFNFg",
+        "skills": [
+          "Functions and arrays",
+          "DOM events",
+          "Debugging"
+        ],
+        "practice": "Create a task list that can add, complete, and delete tasks."
+      },
+      {
+        "id": "git-github",
+        "title": "Git and GitHub workflow",
+        "duration": "3 hours",
+        "description": "Track changes, make commits, create branches, and publish work to GitHub.",
+        "videoTitle": "Git and GitHub for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        "skills": [
+          "Commits",
+          "Branches",
+          "Pull requests"
+        ],
+        "practice": "Push one mini-project to GitHub and write a useful README."
+      },
+      {
+        "id": "responsive-design",
+        "title": "Responsive design",
+        "duration": "4 hours",
+        "description": "Design mobile-first layouts with flexible sizing, media queries, and accessible interactions.",
+        "videoTitle": "Responsive Web Design Tutorial",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=freeCodeCamp+responsive+web+design+full+course",
+        "skills": [
+          "Mobile-first CSS",
+          "Media queries",
+          "Accessibility"
+        ],
+        "practice": "Make your profile page work well at 360px, 768px, and desktop widths."
+      },
+      {
+        "id": "react-fundamentals",
+        "title": "React fundamentals",
+        "duration": "8 hours",
+        "description": "Build component-based interfaces with props, state, effects, and reusable composition.",
+        "videoTitle": "React Course - Beginner's Tutorial for React JavaScript Library",
+        "youtubeUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8",
+        "skills": [
+          "Components",
+          "Props and state",
+          "Hooks"
+        ],
+        "practice": "Build a searchable list or simple expense tracker using React."
+      },
+      {
+        "id": "working-with-apis",
+        "title": "Working with APIs",
+        "duration": "4 hours",
+        "description": "Fetch data, handle loading and error states, and connect a user interface to an API.",
+        "videoTitle": "Fetch API in JavaScript",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=JavaScript+Fetch+API+tutorial+for+beginners",
+        "skills": [
+          "fetch and async/await",
+          "JSON",
+          "Loading and error states"
+        ],
+        "practice": "Create a page that searches and displays data from a public API."
+      },
+      {
+        "id": "portfolio-deployment",
+        "title": "Portfolio and deployment",
+        "duration": "5 hours",
+        "description": "Polish two projects, write case-study notes, and deploy your portfolio publicly.",
+        "videoTitle": "Deploy a Website with Vercel",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=deploy+React+Vite+website+with+Vercel+tutorial",
+        "skills": [
+          "Project storytelling",
+          "Deployment",
+          "Portfolio basics"
+        ],
+        "practice": "Publish a portfolio with two projects, screenshots, and working links."
+      }
+    ]
+  },
+  {
+    "id": "full-stack-developer",
+    "title": "Full-Stack Developer",
+    "shortTitle": "Full stack",
+    "category": "Technology",
+    "icon": "Layers3",
+    "tagline": "Build complete products from the interface to the database.",
+    "duration": "24 weeks",
+    "description": "Move from browser fundamentals to APIs, authentication, data storage, and a deployable full-stack project.",
+    "color": "blue",
+    "lessons": [
+      {
+        "id": "web-foundations",
+        "title": "How the web works",
+        "duration": "3 hours",
+        "description": "Learn browsers, HTTP, URLs, client-server requests, and how a web application is delivered.",
+        "videoTitle": "How the Internet Works",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+the+internet+works+for+beginners+computerphile",
+        "skills": [
+          "HTTP basics",
+          "Client and server",
+          "Browser developer tools"
+        ],
+        "practice": "Inspect network requests on three websites and describe what happens after a click."
+      },
+      {
+        "id": "html-css",
+        "title": "HTML and CSS",
+        "duration": "8 hours",
+        "description": "Create semantic pages and build responsive layouts with Flexbox, Grid, and media queries.",
+        "videoTitle": "HTML and CSS Full Course",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=freeCodeCamp+HTML+CSS+full+course+beginners",
+        "skills": [
+          "Semantic structure",
+          "Responsive layout",
+          "Accessibility"
+        ],
+        "practice": "Build a responsive landing page from a simple wireframe."
+      },
+      {
+        "id": "javascript-core",
+        "title": "JavaScript core",
+        "duration": "10 hours",
+        "description": "Become comfortable with arrays, objects, functions, modules, promises, and async/await.",
+        "videoTitle": "JavaScript Full Course",
+        "youtubeUrl": "https://www.youtube.com/watch?v=PkZNo7MFNFg",
+        "skills": [
+          "Modern JavaScript",
+          "Async code",
+          "Modules"
+        ],
+        "practice": "Build a searchable, filterable catalogue using local JSON data."
+      },
+      {
+        "id": "react-frontend",
+        "title": "React frontend",
+        "duration": "9 hours",
+        "description": "Structure a frontend with components, hooks, routing concepts, forms, and reusable UI.",
+        "videoTitle": "React Course - Beginner's Tutorial",
+        "youtubeUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8",
+        "skills": [
+          "React components",
+          "State and effects",
+          "Form handling"
+        ],
+        "practice": "Build a multi-page dashboard with a filter and edit form."
+      },
+      {
+        "id": "node-js",
+        "title": "Node.js fundamentals",
+        "duration": "6 hours",
+        "description": "Use JavaScript on the server, work with modules, environment variables, and asynchronous I/O.",
+        "videoTitle": "Node.js Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Node.js+full+course+for+beginners+freeCodeCamp",
+        "skills": [
+          "Node runtime",
+          "Modules",
+          "Environment variables"
+        ],
+        "practice": "Create a small command-line app that reads and writes a JSON file."
+      },
+      {
+        "id": "express-apis",
+        "title": "REST APIs with Express",
+        "duration": "7 hours",
+        "description": "Design endpoints, validate inputs, use middleware, and return consistent API responses.",
+        "videoTitle": "Express JS Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Express.js+REST+API+full+course+beginners",
+        "skills": [
+          "Routes and middleware",
+          "Validation",
+          "HTTP status codes"
+        ],
+        "practice": "Build CRUD endpoints for a study-task API and test them with an API client."
+      },
+      {
+        "id": "sql-data",
+        "title": "SQL and database design",
+        "duration": "8 hours",
+        "description": "Model relational data, write queries, join tables, and reason about keys and constraints.",
+        "videoTitle": "SQL Full Course",
+        "youtubeUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+        "skills": [
+          "SELECT and JOIN",
+          "Schema design",
+          "Constraints"
+        ],
+        "practice": "Design and query a simple users, courses, and progress database."
+      },
+      {
+        "id": "auth-deployment",
+        "title": "Authentication and deployment",
+        "duration": "8 hours",
+        "description": "Understand password hashing, sessions or tokens, secure configuration, and shipping an app.",
+        "videoTitle": "Authentication and Web App Security Basics",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Node.js+authentication+JWT+security+beginner+tutorial",
+        "skills": [
+          "Authentication concepts",
+          "Secrets management",
+          "Deployment checklist"
+        ],
+        "practice": "Deploy your app and document its setup, environment variables, and security limits."
+      }
+    ]
+  },
+  {
+    "id": "data-analyst",
+    "title": "Data Analyst",
+    "shortTitle": "Data analyst",
+    "category": "Data & AI",
+    "icon": "ChartNoAxesCombined",
+    "tagline": "Turn messy data into decisions people can trust.",
+    "duration": "18 weeks",
+    "description": "Build confidence in spreadsheets, SQL, Python, visualisation, and presenting business insights.",
+    "color": "mint",
+    "lessons": [
+      {
+        "id": "excel-analysis",
+        "title": "Excel for analysis",
+        "duration": "6 hours",
+        "description": "Clean tables, use formulas, create pivot tables, and summarise patterns in business data.",
+        "videoTitle": "Excel for Beginners - Full Course",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Vl0H-qTclOg",
+        "skills": [
+          "Formulas",
+          "Pivot tables",
+          "Data cleaning"
+        ],
+        "practice": "Analyse a sample sales table and build a one-page KPI summary."
+      },
+      {
+        "id": "sql-foundations",
+        "title": "SQL fundamentals",
+        "duration": "8 hours",
+        "description": "Query structured data with SELECT, filters, grouping, joins, and subqueries.",
+        "videoTitle": "SQL Tutorial - Full Database Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+        "skills": [
+          "SELECT and WHERE",
+          "GROUP BY",
+          "JOIN"
+        ],
+        "practice": "Answer ten business questions using SQL and save your queries."
+      },
+      {
+        "id": "stats-thinking",
+        "title": "Statistics for decision-making",
+        "duration": "5 hours",
+        "description": "Understand distributions, averages, variation, correlation, sampling, and uncertainty.",
+        "videoTitle": "Statistics for Data Science",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=statistics+for+data+science+full+course+beginners",
+        "skills": [
+          "Mean and median",
+          "Variance",
+          "Correlation vs causation"
+        ],
+        "practice": "Write five evidence-based observations and note what the data cannot prove."
+      },
+      {
+        "id": "python-basics",
+        "title": "Python foundations",
+        "duration": "8 hours",
+        "description": "Use variables, collections, loops, functions, files, and notebooks to automate analysis.",
+        "videoTitle": "Learn Python - Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rfscVS0vtbw",
+        "skills": [
+          "Data structures",
+          "Functions",
+          "Jupyter notebooks"
+        ],
+        "practice": "Write a script that reads a CSV and reports row counts and missing values."
+      },
+      {
+        "id": "pandas-cleaning",
+        "title": "Pandas and data cleaning",
+        "duration": "7 hours",
+        "description": "Load datasets, inspect columns, handle missing values, transform types, and combine tables.",
+        "videoTitle": "Data Analysis with Python and Pandas",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WcDaZ67TVRo",
+        "skills": [
+          "DataFrames",
+          "Missing values",
+          "Merge and groupby"
+        ],
+        "practice": "Clean a messy dataset and create a short before/after summary."
+      },
+      {
+        "id": "data-visualization",
+        "title": "Data visualisation",
+        "duration": "6 hours",
+        "description": "Choose meaningful charts and communicate trends without misleading the audience.",
+        "videoTitle": "Data Visualization with Python",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=data+visualization+with+python+matplotlib+seaborn+full+tutorial",
+        "skills": [
+          "Chart selection",
+          "Labels and scales",
+          "Narrative"
+        ],
+        "practice": "Create three charts answering one clearly stated business question."
+      },
+      {
+        "id": "dashboard-bi",
+        "title": "BI dashboards",
+        "duration": "7 hours",
+        "description": "Design a dashboard with helpful KPIs, useful filters, and an obvious reading order.",
+        "videoTitle": "Power BI Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Power+BI+full+course+for+beginners",
+        "skills": [
+          "KPI selection",
+          "Filters",
+          "Dashboard layout"
+        ],
+        "practice": "Create a dashboard that answers who, what changed, and what to do next."
+      },
+      {
+        "id": "analyst-portfolio",
+        "title": "Portfolio project and storytelling",
+        "duration": "6 hours",
+        "description": "Use a real dataset to show the question, method, insight, limitation, and recommendation.",
+        "videoTitle": "Data Analyst Portfolio Project",
+        "youtubeUrl": "https://www.youtube.com/watch?v=PSNXoAs2FtQ",
+        "skills": [
+          "Business framing",
+          "Reproducible analysis",
+          "Presentation"
+        ],
+        "practice": "Publish a notebook and a concise case study with three recommendations."
+      }
+    ]
+  },
+  {
+    "id": "ai-ml-engineer",
+    "title": "AI / ML Engineer",
+    "shortTitle": "AI / ML",
+    "category": "Data & AI",
+    "icon": "BrainCircuit",
+    "tagline": "Build useful AI systems with strong foundations and real projects.",
+    "duration": "28 weeks",
+    "description": "Start with Python and data, learn model building and evaluation, then ship an applied AI project.",
+    "color": "violet",
+    "lessons": [
+      {
+        "id": "python-programming",
+        "title": "Python programming",
+        "duration": "10 hours",
+        "description": "Learn the language fundamentals you need to manipulate data and build reliable programs.",
+        "videoTitle": "Python for Beginners - Full Course",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rfscVS0vtbw",
+        "skills": [
+          "Functions and collections",
+          "Modules",
+          "Exceptions"
+        ],
+        "practice": "Build a command-line study tracker that saves progress to a file."
+      },
+      {
+        "id": "math-statistics",
+        "title": "Math and statistics essentials",
+        "duration": "8 hours",
+        "description": "Build intuition for vectors, matrices, probability, distributions, and gradients.",
+        "videoTitle": "Math for Machine Learning",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=math+for+machine+learning+beginner+full+course",
+        "skills": [
+          "Vectors and matrices",
+          "Probability",
+          "Gradient intuition"
+        ],
+        "practice": "Explain a simple linear model with a small plotted dataset."
+      },
+      {
+        "id": "data-wrangling",
+        "title": "Data analysis with NumPy and Pandas",
+        "duration": "8 hours",
+        "description": "Load, inspect, clean, transform, and explore data before training any model.",
+        "videoTitle": "Data Analysis with Python",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WcDaZ67TVRo",
+        "skills": [
+          "Arrays and DataFrames",
+          "Exploratory analysis",
+          "Feature preparation"
+        ],
+        "practice": "Create a reproducible notebook that cleans and explores a public dataset."
+      },
+      {
+        "id": "ml-fundamentals",
+        "title": "Machine learning fundamentals",
+        "duration": "10 hours",
+        "description": "Understand supervised learning, feature engineering, train/test splits, and baseline models.",
+        "videoTitle": "Machine Learning for Everybody",
+        "youtubeUrl": "https://www.youtube.com/watch?v=i_LwzRVP7bg",
+        "skills": [
+          "Regression and classification",
+          "Data leakage",
+          "Baselines"
+        ],
+        "practice": "Train a baseline model and compare it with a simple improved model."
+      },
+      {
+        "id": "model-evaluation",
+        "title": "Model evaluation and improvement",
+        "duration": "7 hours",
+        "description": "Choose metrics that fit the task, use cross-validation, and inspect model errors honestly.",
+        "videoTitle": "Machine Learning Model Evaluation",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=machine+learning+model+evaluation+precision+recall+cross+validation+tutorial",
+        "skills": [
+          "Precision and recall",
+          "Cross-validation",
+          "Error analysis"
+        ],
+        "practice": "Compare models with at least two metrics and explain the trade-offs."
+      },
+      {
+        "id": "deep-learning",
+        "title": "Neural networks and deep learning",
+        "duration": "10 hours",
+        "description": "Learn layers, activations, loss functions, optimisation, and when deep learning is appropriate.",
+        "videoTitle": "Deep Learning for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=freeCodeCamp+deep+learning+full+course+beginners",
+        "skills": [
+          "Neural network basics",
+          "Loss and optimisation",
+          "Overfitting"
+        ],
+        "practice": "Train a small classifier and record how performance changes with training."
+      },
+      {
+        "id": "llm-rag",
+        "title": "LLMs, embeddings, and RAG",
+        "duration": "8 hours",
+        "description": "Explore language-model prompting, embeddings, retrieval, grounding, and evaluation of AI answers.",
+        "videoTitle": "Retrieval Augmented Generation (RAG) Tutorial",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=RAG+retrieval+augmented+generation+full+tutorial+LangChain",
+        "skills": [
+          "Embeddings",
+          "Chunking and retrieval",
+          "Grounded evaluation"
+        ],
+        "practice": "Build a small document Q&A prototype and test it with questions the source can answer."
+      },
+      {
+        "id": "ai-capstone",
+        "title": "Ship an applied AI project",
+        "duration": "10 hours",
+        "description": "Turn a clear user problem into a documented prototype with evaluation and a usable interface.",
+        "videoTitle": "End-to-End Machine Learning Project",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=end+to+end+machine+learning+project+deployment+tutorial",
+        "skills": [
+          "Problem definition",
+          "Reproducibility",
+          "Deployment basics"
+        ],
+        "practice": "Publish a demo, README, evaluation notes, limitations, and a short walkthrough."
+      }
+    ]
+  },
+  {
+    "id": "cybersecurity-analyst",
+    "title": "Cybersecurity Analyst",
+    "shortTitle": "Cybersecurity",
+    "category": "Technology",
+    "icon": "ShieldCheck",
+    "tagline": "Learn to identify risk, investigate signals, and defend systems responsibly.",
+    "duration": "22 weeks",
+    "description": "Build networking and Linux foundations, practise defensive security, and document a safe home lab.",
+    "color": "mint",
+    "lessons": [
+      {
+        "id": "networking-basics",
+        "title": "Networking fundamentals",
+        "duration": "8 hours",
+        "description": "Understand IP addressing, DNS, ports, TCP/UDP, routing, and how traffic moves.",
+        "videoTitle": "Computer Networking Course",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=computer+networking+full+course+for+beginners",
+        "skills": [
+          "IP and subnet basics",
+          "DNS and ports",
+          "Packet flow"
+        ],
+        "practice": "Draw the path of a browser request and explain key protocols."
+      },
+      {
+        "id": "linux-command-line",
+        "title": "Linux and the command line",
+        "duration": "7 hours",
+        "description": "Navigate files, permissions, processes, logs, and shell commands in a safe environment.",
+        "videoTitle": "Linux for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Linux+for+beginners+full+course+freeCodeCamp",
+        "skills": [
+          "Files and permissions",
+          "Processes",
+          "Logs"
+        ],
+        "practice": "Create a Linux lab checklist and practise inspecting system logs."
+      },
+      {
+        "id": "python-scripting",
+        "title": "Python for security tasks",
+        "duration": "6 hours",
+        "description": "Automate safe repetitive tasks with scripts, text processing, files, and simple network data.",
+        "videoTitle": "Python for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rfscVS0vtbw",
+        "skills": [
+          "File processing",
+          "Parsing logs",
+          "Safe automation"
+        ],
+        "practice": "Write a log parser that counts event types from a sample file."
+      },
+      {
+        "id": "security-fundamentals",
+        "title": "Security principles and threat modelling",
+        "duration": "5 hours",
+        "description": "Learn confidentiality, integrity, availability, least privilege, and basic risk analysis.",
+        "videoTitle": "Cyber Security Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=cybersecurity+full+course+for+beginners+defensive+security",
+        "skills": [
+          "CIA triad",
+          "Threat modelling",
+          "Least privilege"
+        ],
+        "practice": "Threat-model a simple student portal and suggest reasonable safeguards."
+      },
+      {
+        "id": "web-security",
+        "title": "Web security fundamentals",
+        "duration": "7 hours",
+        "description": "Recognise common web risks, input validation issues, access-control gaps, and secure design habits.",
+        "videoTitle": "OWASP Top 10 Explained",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=OWASP+Top+10+explained+beginner+web+security",
+        "skills": [
+          "OWASP Top 10",
+          "Input validation",
+          "Access control"
+        ],
+        "practice": "Use a deliberately vulnerable training lab only; document each finding and fix."
+      },
+      {
+        "id": "siem-logs",
+        "title": "Logs, alerts, and SIEM basics",
+        "duration": "6 hours",
+        "description": "Understand log sources, detection rules, event context, and how alert triage works.",
+        "videoTitle": "SIEM Fundamentals for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=SIEM+fundamentals+for+beginners+SOC+analyst",
+        "skills": [
+          "Log sources",
+          "Alert triage",
+          "False positives"
+        ],
+        "practice": "Review sample logs and write a short incident timeline from the evidence."
+      },
+      {
+        "id": "incident-response",
+        "title": "Incident response",
+        "duration": "5 hours",
+        "description": "Follow a repeatable process for preparation, identification, containment, recovery, and lessons learned.",
+        "videoTitle": "Incident Response Process Explained",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=incident+response+process+SOC+analyst+beginner",
+        "skills": [
+          "Triage",
+          "Evidence notes",
+          "Containment planning"
+        ],
+        "practice": "Write a tabletop response plan for a suspicious account login."
+      },
+      {
+        "id": "defense-lab",
+        "title": "Build a defensive security lab",
+        "duration": "8 hours",
+        "description": "Create a safe, isolated lab and present findings, hardening steps, and ethical boundaries.",
+        "videoTitle": "Build a Cybersecurity Home Lab",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=build+a+defensive+cybersecurity+home+lab+for+beginners",
+        "skills": [
+          "Lab isolation",
+          "Documentation",
+          "Defensive portfolio"
+        ],
+        "practice": "Publish a lab report using only authorised training systems and sample data."
+      }
+    ]
+  },
+  {
+    "id": "ui-ux-designer",
+    "title": "UI/UX Designer",
+    "shortTitle": "UI/UX design",
+    "category": "Design",
+    "icon": "PanelsTopLeft",
+    "tagline": "Design digital products that feel clear, useful, and human.",
+    "duration": "14 weeks",
+    "description": "Learn user-centred thinking, create prototypes in Figma, test usability, and present case studies.",
+    "color": "pink",
+    "lessons": [
+      {
+        "id": "design-principles",
+        "title": "Visual design principles",
+        "duration": "5 hours",
+        "description": "Use hierarchy, spacing, contrast, typography, and consistency to guide attention.",
+        "videoTitle": "UI/UX Design Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU",
+        "skills": [
+          "Visual hierarchy",
+          "Typography",
+          "Spacing and contrast"
+        ],
+        "practice": "Audit a screen and improve its hierarchy with five deliberate changes."
+      },
+      {
+        "id": "user-research",
+        "title": "User research and empathy",
+        "duration": "5 hours",
+        "description": "Plan interviews, ask neutral questions, identify needs, and separate evidence from assumptions.",
+        "videoTitle": "UX Research for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=UX+research+for+beginners+interviews+usability+testing",
+        "skills": [
+          "Interview planning",
+          "Personas with evidence",
+          "User needs"
+        ],
+        "practice": "Interview three people about a real task and summarise recurring pain points."
+      },
+      {
+        "id": "information-architecture",
+        "title": "Information architecture",
+        "duration": "4 hours",
+        "description": "Organise content and flows so people can understand where they are and what to do next.",
+        "videoTitle": "Information Architecture in UX",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=information+architecture+UX+design+beginner+tutorial",
+        "skills": [
+          "User flows",
+          "Navigation structure",
+          "Card sorting"
+        ],
+        "practice": "Map the user flow for signing up and completing one meaningful task."
+      },
+      {
+        "id": "wireframes",
+        "title": "Wireframes and layout",
+        "duration": "5 hours",
+        "description": "Explore layouts quickly before investing time in high-fidelity visuals.",
+        "videoTitle": "Wireframing for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=wireframing+for+beginners+UX+design+Figma",
+        "skills": [
+          "Low-fidelity sketches",
+          "Layout alternatives",
+          "Interaction states"
+        ],
+        "practice": "Draw three alternative layouts for the same task and explain the trade-offs."
+      },
+      {
+        "id": "figma-workflow",
+        "title": "Figma and components",
+        "duration": "8 hours",
+        "description": "Work with frames, auto layout, components, variants, and a consistent design system.",
+        "videoTitle": "2024 UI/UX Design Crash Course in Figma",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=DesignCourse+UI+UX+Design+Crash+Course+Figma",
+        "skills": [
+          "Auto layout",
+          "Components",
+          "Responsive frames"
+        ],
+        "practice": "Turn a wireframe into a polished, reusable two-screen Figma design."
+      },
+      {
+        "id": "prototyping",
+        "title": "Interactive prototyping",
+        "duration": "4 hours",
+        "description": "Connect screens and design realistic states, transitions, forms, and feedback.",
+        "videoTitle": "Figma Prototyping Tutorial",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Figma+prototyping+tutorial+beginners",
+        "skills": [
+          "Prototype links",
+          "Interaction states",
+          "Microcopy"
+        ],
+        "practice": "Build a clickable prototype for one end-to-end user journey."
+      },
+      {
+        "id": "usability-testing",
+        "title": "Usability testing and iteration",
+        "duration": "4 hours",
+        "description": "Observe users completing tasks, capture friction, and prioritise changes from evidence.",
+        "videoTitle": "Usability Testing for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=usability+testing+UX+design+beginner+tutorial",
+        "skills": [
+          "Task scripts",
+          "Observation",
+          "Iteration"
+        ],
+        "practice": "Run three usability sessions and revise the design based on the findings."
+      },
+      {
+        "id": "design-portfolio",
+        "title": "Portfolio case study",
+        "duration": "5 hours",
+        "description": "Tell a clear story about the problem, research, design choices, testing, and outcomes.",
+        "videoTitle": "UX Design Portfolio Case Study",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=UX+design+portfolio+case+study+for+beginners",
+        "skills": [
+          "Case-study narrative",
+          "Design rationale",
+          "Presentation"
+        ],
+        "practice": "Publish a case study that shows your process, not only polished screens."
+      }
+    ]
+  },
+  {
+    "id": "product-manager",
+    "title": "Product Manager",
+    "shortTitle": "Product manager",
+    "category": "Business",
+    "icon": "Target",
+    "tagline": "Find the right problem, align a team, and measure what changes.",
+    "duration": "12 weeks",
+    "description": "Practise discovery, prioritisation, product metrics, cross-functional collaboration, and product storytelling.",
+    "color": "blue",
+    "lessons": [
+      {
+        "id": "product-fundamentals",
+        "title": "Product management fundamentals",
+        "duration": "4 hours",
+        "description": "Understand product outcomes, lifecycle, responsibilities, and how product differs from project delivery.",
+        "videoTitle": "Introduction to Product Management",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Great+Learning+Introduction+to+Product+Management+full+course",
+        "skills": [
+          "Product lifecycle",
+          "Outcomes vs outputs",
+          "Team responsibilities"
+        ],
+        "practice": "Write a one-page product brief for a problem you personally understand."
+      },
+      {
+        "id": "customer-discovery",
+        "title": "Customer discovery",
+        "duration": "5 hours",
+        "description": "Find real user problems through interviews, observation, and careful evidence gathering.",
+        "videoTitle": "Customer Discovery for Startups",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=customer+discovery+interviews+product+management+beginner",
+        "skills": [
+          "Interview questions",
+          "Problem evidence",
+          "Assumption mapping"
+        ],
+        "practice": "Interview three target users and identify one problem worth validating further."
+      },
+      {
+        "id": "problem-framing",
+        "title": "Problem framing and value proposition",
+        "duration": "4 hours",
+        "description": "Define the user, context, problem, desired outcome, and why an approach could help.",
+        "videoTitle": "Product Problem Framing",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=product+management+problem+framing+value+proposition+tutorial",
+        "skills": [
+          "Problem statements",
+          "Value proposition",
+          "Success criteria"
+        ],
+        "practice": "Compare three possible solutions against the same user problem."
+      },
+      {
+        "id": "product-metrics",
+        "title": "Product metrics and analytics",
+        "duration": "5 hours",
+        "description": "Use activation, retention, engagement, and conversion metrics to check product health.",
+        "videoTitle": "Product Metrics for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=product+management+metrics+retention+activation+conversion+for+beginners",
+        "skills": [
+          "North-star metric",
+          "Funnels",
+          "Cohorts"
+        ],
+        "practice": "Define one north-star metric and three supporting metrics for your product idea."
+      },
+      {
+        "id": "prioritization",
+        "title": "Prioritisation and roadmaps",
+        "duration": "4 hours",
+        "description": "Compare opportunities transparently and balance impact, confidence, effort, and risk.",
+        "videoTitle": "Product Prioritization Frameworks",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=product+management+prioritization+RICE+framework+tutorial",
+        "skills": [
+          "RICE scoring",
+          "Trade-offs",
+          "Roadmap communication"
+        ],
+        "practice": "Prioritise ten feature ideas and explain what you deliberately postpone."
+      },
+      {
+        "id": "ux-collaboration",
+        "title": "Work with design and engineering",
+        "duration": "4 hours",
+        "description": "Write clear requirements, map flows, and collaborate without dictating implementation details.",
+        "videoTitle": "Product Manager Working with Designers and Engineers",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=product+manager+working+with+designers+engineers+requirements+tutorial",
+        "skills": [
+          "User stories",
+          "Acceptance criteria",
+          "Cross-functional communication"
+        ],
+        "practice": "Write five user stories with acceptance criteria for one small feature."
+      },
+      {
+        "id": "agile-delivery",
+        "title": "Agile delivery and experiments",
+        "duration": "4 hours",
+        "description": "Plan small increments, communicate risks, and design experiments to reduce uncertainty.",
+        "videoTitle": "Agile Product Management",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=agile+product+management+for+beginners+full+course",
+        "skills": [
+          "Backlog basics",
+          "Experiments",
+          "Release planning"
+        ],
+        "practice": "Design a low-cost experiment that tests your riskiest product assumption."
+      },
+      {
+        "id": "pm-case-study",
+        "title": "Product case study and interviews",
+        "duration": "5 hours",
+        "description": "Explain decisions, trade-offs, metrics, and learning in a structured case study.",
+        "videoTitle": "Product Manager Case Study Interview",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=product+manager+case+study+interview+for+beginners",
+        "skills": [
+          "Structured thinking",
+          "Trade-off narrative",
+          "Interview practice"
+        ],
+        "practice": "Present a product case study in five minutes and answer likely follow-up questions."
+      }
+    ]
+  },
+  {
+    "id": "digital-marketer",
+    "title": "Digital Marketer",
+    "shortTitle": "Digital marketing",
+    "category": "Business",
+    "icon": "Megaphone",
+    "tagline": "Reach the right people, tell a clear story, and measure growth.",
+    "duration": "12 weeks",
+    "description": "Combine audience research, SEO, content, social, email, and analytics into measurable campaigns.",
+    "color": "pink",
+    "lessons": [
+      {
+        "id": "marketing-fundamentals",
+        "title": "Marketing fundamentals",
+        "duration": "4 hours",
+        "description": "Understand audiences, positioning, customer journeys, offers, and how marketing supports a business.",
+        "videoTitle": "Digital Marketing Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Google+Digital+Marketing+full+course+beginners",
+        "skills": [
+          "Audience segments",
+          "Positioning",
+          "Customer journey"
+        ],
+        "practice": "Write an audience profile and message map for a simple product."
+      },
+      {
+        "id": "seo-basics",
+        "title": "SEO fundamentals",
+        "duration": "5 hours",
+        "description": "Understand search intent, on-page optimisation, site structure, and useful content practices.",
+        "videoTitle": "SEO Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Ahrefs+SEO+course+for+beginners+full+course",
+        "skills": [
+          "Search intent",
+          "On-page SEO",
+          "Internal links"
+        ],
+        "practice": "Audit one page and suggest five improvements based on user intent."
+      },
+      {
+        "id": "content-strategy",
+        "title": "Content strategy and copywriting",
+        "duration": "4 hours",
+        "description": "Plan content around audience questions, choose formats, and write clear calls to action.",
+        "videoTitle": "Content Marketing Strategy",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=content+marketing+strategy+for+beginners+full+course",
+        "skills": [
+          "Content pillars",
+          "Copywriting",
+          "Call to action"
+        ],
+        "practice": "Create a one-week content calendar with one measurable objective."
+      },
+      {
+        "id": "social-media",
+        "title": "Social media strategy",
+        "duration": "4 hours",
+        "description": "Choose platforms based on audience and design a sustainable publishing and engagement routine.",
+        "videoTitle": "Social Media Marketing Course",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=HubSpot+social+media+marketing+course+full",
+        "skills": [
+          "Platform fit",
+          "Publishing rhythm",
+          "Community responses"
+        ],
+        "practice": "Plan five posts that serve one audience goal rather than chasing vanity metrics."
+      },
+      {
+        "id": "email-marketing",
+        "title": "Email marketing and lifecycle",
+        "duration": "4 hours",
+        "description": "Build permission-based lists, useful messages, simple segments, and a welcome sequence.",
+        "videoTitle": "Email Marketing for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=email+marketing+for+beginners+course+segmentation+automation",
+        "skills": [
+          "Permission and consent",
+          "Segmentation",
+          "Email sequences"
+        ],
+        "practice": "Draft a three-email onboarding sequence with a clear purpose for each message."
+      },
+      {
+        "id": "analytics",
+        "title": "Analytics and measurement",
+        "duration": "5 hours",
+        "description": "Define conversion events and use reliable measurements to connect campaigns to outcomes.",
+        "videoTitle": "Google Analytics 4 Tutorial",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Google+Analytics+4+full+course+beginners",
+        "skills": [
+          "UTM tagging",
+          "Conversion events",
+          "Reporting"
+        ],
+        "practice": "Create a weekly campaign report with goal, result, and next action."
+      },
+      {
+        "id": "paid-campaigns",
+        "title": "Paid ads and experiments",
+        "duration": "5 hours",
+        "description": "Understand campaign structure, landing-page fit, budgets, testing, and ethical ad practices.",
+        "videoTitle": "Google Ads Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Google+Ads+course+for+beginners+full+course",
+        "skills": [
+          "Campaign structure",
+          "Budget basics",
+          "A/B tests"
+        ],
+        "practice": "Draft a small campaign brief with audience, budget assumptions, and success metric."
+      },
+      {
+        "id": "marketing-portfolio",
+        "title": "Campaign portfolio",
+        "duration": "5 hours",
+        "description": "Present a campaign plan, assets, measurement design, and honest learning outcomes.",
+        "videoTitle": "Digital Marketing Portfolio for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=digital+marketing+portfolio+case+study+for+beginners",
+        "skills": [
+          "Campaign brief",
+          "Creative samples",
+          "Measurement plan"
+        ],
+        "practice": "Create a portfolio case study using a real or clearly labelled practice campaign."
+      }
+    ]
+  },
+  {
+    "id": "cloud-engineer",
+    "title": "Cloud Engineer",
+    "shortTitle": "Cloud engineer",
+    "category": "Technology",
+    "icon": "Cloud",
+    "tagline": "Understand cloud infrastructure and deploy reliable services.",
+    "duration": "20 weeks",
+    "description": "Learn Linux, networking, cloud building blocks, automation, monitoring, and a practical deployment.",
+    "color": "blue",
+    "lessons": [
+      {
+        "id": "cloud-basics",
+        "title": "Cloud computing foundations",
+        "duration": "4 hours",
+        "description": "Learn IaaS, PaaS, SaaS, regions, availability zones, scaling, and shared responsibility.",
+        "videoTitle": "Cloud Computing Full Course",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=cloud+computing+full+course+for+beginners",
+        "skills": [
+          "Cloud service models",
+          "Regions and zones",
+          "Shared responsibility"
+        ],
+        "practice": "Map a simple web application to compute, storage, networking, and identity services."
+      },
+      {
+        "id": "linux-essentials",
+        "title": "Linux essentials",
+        "duration": "7 hours",
+        "description": "Operate on the command line, inspect logs, manage permissions, and understand processes.",
+        "videoTitle": "Linux Full Course for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Linux+full+course+for+beginners",
+        "skills": [
+          "Shell navigation",
+          "Permissions",
+          "Processes and logs"
+        ],
+        "practice": "Create a Linux command cheat sheet and use it to inspect a test environment."
+      },
+      {
+        "id": "networking-cloud",
+        "title": "Networking for cloud",
+        "duration": "6 hours",
+        "description": "Understand subnets, DNS, routing, firewalls, ports, and how cloud networks are segmented.",
+        "videoTitle": "Networking Fundamentals for Cloud Engineers",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=networking+fundamentals+for+cloud+engineers+beginner",
+        "skills": [
+          "IP and subnets",
+          "DNS",
+          "Security groups and firewalls"
+        ],
+        "practice": "Draw a two-tier architecture and explain how traffic is allowed or blocked."
+      },
+      {
+        "id": "aws-core",
+        "title": "Core cloud services",
+        "duration": "8 hours",
+        "description": "Explore virtual compute, object storage, managed databases, identity, and basic cost controls.",
+        "videoTitle": "AWS Cloud Practitioner Full Course",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=AWS+Cloud+Practitioner+full+course+freeCodeCamp",
+        "skills": [
+          "Compute and storage",
+          "IAM concepts",
+          "Cost awareness"
+        ],
+        "practice": "Deploy a static site in a free-tier-eligible lab and clean up unused resources."
+      },
+      {
+        "id": "cloud-security",
+        "title": "Cloud identity and security",
+        "duration": "5 hours",
+        "description": "Apply least privilege, secrets handling, encryption concepts, and secure defaults.",
+        "videoTitle": "AWS Cloud Security Basics",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=AWS+IAM+cloud+security+basics+for+beginners",
+        "skills": [
+          "IAM",
+          "Secrets management",
+          "Encryption basics"
+        ],
+        "practice": "Review a mock cloud architecture and list the highest-priority security improvements."
+      },
+      {
+        "id": "automation-scripting",
+        "title": "Automation and scripting",
+        "duration": "6 hours",
+        "description": "Use scripts and repeatable configuration to reduce manual infrastructure work.",
+        "videoTitle": "Python Automation for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Python+automation+for+beginners+full+course",
+        "skills": [
+          "Shell scripting",
+          "Python basics",
+          "Repeatable steps"
+        ],
+        "practice": "Automate a small file or reporting task and document how to run it."
+      },
+      {
+        "id": "containers-ci",
+        "title": "Containers and CI/CD",
+        "duration": "8 hours",
+        "description": "Understand images, containers, environment configuration, and a simple build-and-deploy pipeline.",
+        "videoTitle": "Docker and CI/CD for Beginners",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=Docker+and+CI%2FCD+for+beginners+full+course",
+        "skills": [
+          "Containers",
+          "Build pipeline",
+          "Environment configuration"
+        ],
+        "practice": "Containerise a small web app and document the steps to run it."
+      },
+      {
+        "id": "cloud-capstone",
+        "title": "Cloud deployment capstone",
+        "duration": "8 hours",
+        "description": "Deploy a small service with sensible access controls, monitoring, cost awareness, and documentation.",
+        "videoTitle": "Deploy a Full-Stack App to the Cloud",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=deploy+full+stack+app+to+cloud+beginner+tutorial",
+        "skills": [
+          "Architecture diagram",
+          "Monitoring basics",
+          "Operational README"
+        ],
+        "practice": "Publish a working deployment with an architecture diagram and a teardown checklist."
+      }
+    ]
+  },
+  {
+    "id": "career-explorer",
+    "title": "Career Explorer",
+    "shortTitle": "Career explorer",
+    "category": "Career skills",
+    "icon": "Compass",
+    "tagline": "Turn an open-ended ambition into a clear, testable learning plan.",
+    "duration": "12 weeks",
+    "description": "A flexible starter path for a custom goal: research the role, learn the essentials, practise, build proof, and prepare for opportunities.",
+    "color": "violet",
+    "lessons": [
+      {
+        "id": "map-your-goal",
+        "title": "Map your goal and the role",
+        "duration": "2 hours",
+        "description": "Break your goal into the real-world responsibilities, outcomes, and skills the role requires.",
+        "videoTitle": "How to research a career path",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+research+a+career+path+and+skills+for+beginners",
+        "skills": [
+          "Role responsibilities",
+          "Skills map",
+          "Success signals"
+        ],
+        "practice": "Write a one-page role brief and list five skills or outcomes you need to demonstrate."
+      },
+      {
+        "id": "learn-the-foundations",
+        "title": "Learn the foundations",
+        "duration": "5 hours",
+        "description": "Build the core concepts and vocabulary you need before choosing advanced tools or topics.",
+        "videoTitle": "Learning how to learn - beginner guide",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=learning+how+to+learn+beginner+study+strategies+course",
+        "skills": [
+          "Core vocabulary",
+          "Study notes",
+          "Retrieval practice"
+        ],
+        "practice": "Create a glossary of 15 key terms and explain five in your own words."
+      },
+      {
+        "id": "core-tools",
+        "title": "Practise the core tools",
+        "duration": "5 hours",
+        "description": "Identify the tools commonly used in your target field and practise the most important workflows.",
+        "videoTitle": "How to learn professional tools effectively",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+learn+professional+tools+for+beginners+hands+on+tutorial",
+        "skills": [
+          "Tool selection",
+          "Basic workflow",
+          "Documentation"
+        ],
+        "practice": "Complete three small exercises with one commonly used tool in your target field."
+      },
+      {
+        "id": "guided-exercises",
+        "title": "Complete guided exercises",
+        "duration": "5 hours",
+        "description": "Use short, focused exercises to turn passive knowledge into repeatable skills.",
+        "videoTitle": "How to practise a new skill effectively",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=deliberate+practice+learn+new+skill+for+beginners",
+        "skills": [
+          "Practice routine",
+          "Self-checks",
+          "Error notes"
+        ],
+        "practice": "Complete five targeted exercises and keep a note of what you had to look up."
+      },
+      {
+        "id": "mini-project",
+        "title": "Build a small practical project",
+        "duration": "7 hours",
+        "description": "Apply the foundational concepts to a small project that solves a clear problem.",
+        "videoTitle": "How to build a beginner portfolio project",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+build+a+beginner+portfolio+project+step+by+step",
+        "skills": [
+          "Scope control",
+          "Execution",
+          "Documentation"
+        ],
+        "practice": "Build one small, finished project with a clear goal and evidence of the result."
+      },
+      {
+        "id": "feedback-iteration",
+        "title": "Get feedback and improve",
+        "duration": "3 hours",
+        "description": "Use feedback, a checklist, or a real user test to find the weakest part of your work.",
+        "videoTitle": "How to get feedback and improve your work",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+ask+for+feedback+and+improve+your+work+career",
+        "skills": [
+          "Feedback questions",
+          "Iteration",
+          "Quality checklist"
+        ],
+        "practice": "Ask one person to review your work and make three specific improvements."
+      },
+      {
+        "id": "proof-of-skill",
+        "title": "Create proof of your skills",
+        "duration": "4 hours",
+        "description": "Package your project, notes, and decisions into evidence another person can understand quickly.",
+        "videoTitle": "How to create a beginner portfolio",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+create+a+beginner+portfolio+and+case+study",
+        "skills": [
+          "Portfolio story",
+          "Evidence",
+          "Reflection"
+        ],
+        "practice": "Create a one-page case study that explains the problem, your approach, and what changed."
+      },
+      {
+        "id": "career-launch",
+        "title": "Prepare for your next opportunity",
+        "duration": "4 hours",
+        "description": "Identify realistic next opportunities and explain your learning with clarity and evidence.",
+        "videoTitle": "How to prepare for entry-level opportunities",
+        "youtubeUrl": "https://www.youtube.com/results?search_query=how+to+prepare+for+entry+level+jobs+portfolio+interview+beginners",
+        "skills": [
+          "Opportunity research",
+          "CV and profile",
+          "Interview stories"
+        ],
+        "practice": "Find five suitable opportunities and adapt your project summary to one of them."
+      }
+    ]
+  }
+]
