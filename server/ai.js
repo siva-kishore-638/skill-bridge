@@ -648,11 +648,36 @@ export async function createTopicQuiz(payload = {}) {
   const lesson = payload.lesson || {};
   const pathTitle = clean(payload.pathTitle || 'Personalised learning path', 120);
   const attempt = Math.max(1, Number(payload.attempt) || 1);
-  const language = clean(payload.profile?.language || 'English', 50);
+  const language = 'English';
   const avoidQuestions = Array.isArray(payload.avoidQuestions) ? payload.avoidQuestions.slice(-40).map((item) => clean(typeof item === 'string' ? item : item?.question || '', 250)).filter(Boolean) : [];
   const fallback = createFallbackQuiz({ lesson, pathTitle, attempt, nonce: payload.nonce || `${Date.now()}-${Math.random()}`, avoidQuestions, language });
   if (!getGroqApiKeys().length) return { mode: 'personalized-fallback', quiz: fallback };
-  const prompt = `Create a fresh assessment for this single topic. Each call must create meaningfully different questions, scenarios, options and answer patterns. This is attempt ${attempt}; nonce ${String(payload.nonce || Date.now())}. Avoid both repeating and lightly paraphrasing every prior question supplied. The questions, options and explanations must be written in ${language}. Learner profile: ${JSON.stringify({ education: payload.profile?.education, experience: payload.profile?.experience, interests: payload.profile?.interests, currentSkills: payload.profile?.currentSkills, language })}. Course: ${pathTitle}. Topic: ${JSON.stringify({ title: lesson.title, description: lesson.description, skills: lesson.skills, practice: lesson.practice, quizContext: lesson.quizContext, difficulty: lesson.difficulty })}. Prior questions: ${JSON.stringify(avoidQuestions)}. Return only JSON schema: {"title":string,"instructions":string,"passMark":integer,"difficulty":"beginner|intermediate|advanced","questions":[{"question":string,"options":[string,string,string,string],"correctIndex":integer,"explanation":string,"difficulty":"beginner|intermediate|advanced"}]}. Exactly 5 questions. Each must have one defensible correct answer, plausible distractors, clear language and no trick questions. Mix conceptual, application and scenario tasks; topic and question difficulty should reflect the learner's level. Use no markdown.`;
+  const prompt = `Create a fresh assessment for this single topic. Each call must create meaningfully different questions, scenarios, options and answer patterns. This is attempt ${attempt}; nonce ${String(payload.nonce || Date.now())}. 
+
+LANGUAGE REQUIREMENT: Write ALL assignment content in English only. This includes the title, instructions, every question, all answer options, and every explanation. The learner's preferred learning-resource language must not affect the assignment language. If the supplied topic description, skills, or other context is in another language, understand that context and write the assessment in English.
+
+Learner profile: ${JSON.stringify({
+  education: payload.profile?.education,
+  experience: payload.profile?.experience,
+  interests: payload.profile?.interests,
+  currentSkills: payload.profile?.currentSkills
+})}.
+
+Course: ${pathTitle}.
+Topic: ${JSON.stringify({
+  title: lesson.title,
+  description: lesson.description,
+  skills: lesson.skills,
+  practice: lesson.practice,
+  quizContext: lesson.quizContext,
+  difficulty: lesson.difficulty
+})}.
+
+Prior questions: ${JSON.stringify(avoidQuestions)}.
+
+Return only JSON schema: {"title":string,"instructions":string,"passMark":integer,"difficulty":"beginner|intermediate|advanced","questions":[{"question":string,"options":[string,string,string,string],"correctIndex":integer,"explanation":string,"difficulty":"beginner|intermediate|advanced"}]}.
+
+Exactly 5 questions. Each must have one defensible correct answer, plausible distractors, clear English and no trick questions. Mix conceptual, application and scenario tasks; topic and question difficulty should reflect the learner's level. Use no markdown.`;
   try {
     const generated = await generateWithGroq(prompt, { temperature: 0.9, maxOutputTokens: 5200 });
     if (!generated || !Array.isArray(generated.questions) || generated.questions.length < 5) throw new Error('AI quiz was incomplete.');
