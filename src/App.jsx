@@ -18,7 +18,7 @@ const PHASES = [
   { title: 'Show what you can do', subtitle: 'Turn skills into proof', number: '04' },
 ];
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
-const RESOURCE_LANGUAGES = ['English', 'Hindi', 'Telugu', 'Tamil', 'Kannada', 'Malayalam', 'Bengali', 'Marathi', 'Urdu', 'Punjabi', 'Gujarati', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese', 'Korean', 'Chinese', 'Arabic', 'Russian', 'Other'];
+const RESOURCE_LANGUAGES = ['Telugu', 'Hindi', 'English'];
 const INITIAL_PROFILE = { name: '', email: '', education: 'Learner', language: 'English', customLanguage: '', goalId: 'frontend-developer', customGoal: '', experience: 'Beginner', hoursPerWeek: '5', timelineMonths: '4', interests: '', motivation: '', dreamProject: '', currentSkills: '', learningStyle: 'A balanced mix', preferredIndustry: '' };
 const freeFeatures = ['One AI-personalised career roadmap', 'Full access to every course topic', 'YouTube video and online reading for each topic', 'Dynamic MCQ assignments for every topic', 'Unlimited fresh assignment retries', 'Lesson completion and weekly progress tracking'];
 const proFeatures = ['Everything in Free, with course access kept open', 'Regenerate and refine your AI roadmap', 'Save multiple career pathways', 'Downloadable learning plan export', 'Advanced quiz history and skill-gap insights', 'Portfolio planning and focused career insights'];
@@ -99,17 +99,15 @@ function Onboarding({ onFinish, theme, onToggleTheme }) {
   const submit = async e => {
     e.preventDefault();
     if (form.goalId === 'custom' && !form.customGoal.trim()) return setError('Enter the role or outcome you want to work towards.');
-    if (form.language === 'Other' && !form.customLanguage.trim()) return setError('Enter your preferred resource language.');
     setError('');
     setGenerating(true);
-    const chosenLanguage = form.language === 'Other' ? form.customLanguage.trim() : form.language;
     const readyProfile = {
       ...form,
       name: form.name.trim() || 'Learner',
       email: form.email.trim(),
       education: form.education || 'Learner',
-      language: chosenLanguage,
-      customLanguage: form.customLanguage.trim(),
+      language: form.language,
+      customLanguage: '',
       interests: form.interests.trim(),
       currentSkills: form.currentSkills.trim(),
       motivation: form.motivation.trim(),
@@ -125,8 +123,7 @@ function Onboarding({ onFinish, theme, onToggleTheme }) {
     <div className="onboarding-layout"><section className="onboarding-main"><div className="eyebrow"><Sparkles size={15}/> YOUR NEXT CHAPTER STARTS HERE</div>
       {step === 1 ? <><h1>Learn with a plan.<br/><span>Grow with purpose.</span></h1><p className="onboarding-lede">Share the essentials. We’ll use your goal, starting level, interests and available time to build a path that fits you.</p><Wizard step={1}/><form className="onboarding-form" onSubmit={next}>
         <label>Your name <span className="optional-label">Optional</span><input autoFocus value={form.name} onChange={e => update('name', e.target.value)} placeholder="What should we call you?" autoComplete="name" maxLength={60}/></label>
-        <label>Learning resource language<select value={form.language} onChange={e => { update('language', e.target.value); if (e.target.value !== 'Other') update('customLanguage', ''); }}><option>English</option><option>Hindi</option><option>Telugu</option><option>Tamil</option><option>Kannada</option><option>Malayalam</option><option>Bengali</option><option>Marathi</option><option>Urdu</option><option>Punjabi</option><option>Gujarati</option><option>Spanish</option><option>French</option><option>German</option><option>Portuguese</option><option>Japanese</option><option>Korean</option><option>Chinese</option><option>Arabic</option><option>Russian</option><option>Other</option></select></label>
-        {form.language === 'Other' && <label>Language name<input value={form.customLanguage} onChange={e => update('customLanguage', e.target.value)} placeholder="e.g. Punjabi, Gujarati, Spanish" maxLength={50}/></label>}
+        <label>Learning resource language<select value={form.language} onChange={e => update('language', e.target.value)}><option>Telugu</option><option>Hindi</option><option>English</option></select></label>
         {error && <p className="form-error">{error}</p>}<button className="button primary full" type="submit">Choose my career goal <ArrowRight size={18}/></button><p className="privacy-note"><ShieldCheck size={14}/> You can change your preferences later.</p>
       </form></> : <><h1>What do you want<br/><span>to become?</span></h1><p className="onboarding-lede">Just a few practical details. Optional interests help the AI choose better projects and examples; you don’t need to answer a long questionnaire.</p><Wizard step={2}/><form className="onboarding-form step-two" onSubmit={submit}>
         <label>Career goal<select value={form.goalId} onChange={e => { update('goalId', e.target.value); setError(''); }}>{paths.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}<option value="custom">Something else — I'll type it</option></select></label>
@@ -141,7 +138,7 @@ function Onboarding({ onFinish, theme, onToggleTheme }) {
         {chosen && <div className="selected-path-preview"><IconBadge icon={ICONS[chosen.icon] || Compass} tone={chosen.color} size={44}/><div><strong>{chosen.title}</strong><span>The AI will create the topic sequence from your level, language, interests and time—not simply unlock a preset course.</span></div><CheckCircle2 size={19} className="preview-check"/></div>}
         {error && <p className="form-error">{error}</p>}
         <div className="wizard-actions"><button className="button secondary" type="button" disabled={generating} onClick={() => { setStep(1); setError(''); }}><ArrowRight className="back-arrow" size={17}/> Back</button><button className="button primary" type="submit" disabled={generating}>{generating ? <><RefreshCw className="spin" size={17}/> Creating your path…</> : <>Build my learning roadmap <Sparkles size={17}/></>}</button></div>
-        {generating && <div className="generating-note"><span className="loading-dot"/> Asking the backend to sequence topics around your answers and match YouTube resources to {form.language === 'Other' ? (form.customLanguage || 'your language') : form.language}.</div>}
+        {generating && <div className="generating-note"><span className="loading-dot"/> Asking the backend to sequence topics around your answers and match YouTube resources to {form.language}.</div>}
       </form></>}
       <div className="onboarding-footer">Fewer questions. A more relevant path. A clear next step.</div>
     </section><OnboardingPreview selected={chosen}/></div>
@@ -212,7 +209,7 @@ function PricingView({ plan, onUpgrade, onFree }) {
 }
 function editableProfile(profile) {
   const supported = RESOURCE_LANGUAGES.includes(profile?.language);
-  return { ...profile, language: supported ? (profile?.language || 'English') : 'Other', customLanguage: profile?.customLanguage || (!supported ? profile?.language || '' : '') };
+  return { ...profile, language: supported ? profile.language : 'English', customLanguage: '' };
 }
 function ProfileView({ profile, setProfile, currentPath, onToast, onReset, onSaveProfile }) {
   const [form, setForm] = useState(() => editableProfile(profile));
@@ -223,13 +220,11 @@ function ProfileView({ profile, setProfile, currentPath, onToast, onReset, onSav
     e.preventDefault();
     if (!form.name.trim()) return onToast('Please add your name before saving.');
     if (form.goalId === 'custom' && !form.customGoal.trim()) return onToast('Please enter your custom goal.');
-    if (form.language === 'Other' && !String(form.customLanguage || '').trim()) return onToast('Please enter your preferred learning-resource language.');
-    const customLanguage = String(form.customLanguage || '').trim();
-    const cleaned = { ...form, name: form.name.trim(), email: form.email.trim(), language: form.language === 'Other' ? customLanguage : form.language, customLanguage };
+    const cleaned = { ...form, name: form.name.trim(), email: form.email.trim(), language: form.language, customLanguage: '' };
     onSaveProfile(cleaned);
   };
   return <div className="page-content profile-page"><section className="page-intro-row"><div><span className="eyebrow subtle"><UserRound size={14}/> YOUR DETAILS</span><h1>Your plan should <span>fit your life.</span></h1><p>These answers help PathPilot adapt examples, practice projects and future roadmap refinements to you.</p></div><div className="profile-avatar-large">{(profile.name || 'L').slice(0, 1).toUpperCase()}</div></section><div className="profile-layout"><form className="profile-form-card" onSubmit={save}><div className="section-heading"><div><span className="section-kicker">PERSONAL INFORMATION</span><h3>Your learning profile</h3></div><span className="profile-tag"><ShieldCheck size={14}/> Saved in this browser</span></div>
-    <div className="profile-form-grid"><label>Full name<input value={form.name} onChange={e => update('name', e.target.value)} maxLength={60}/></label><label>Email address <span className="optional-label">Optional</span><input type="email" value={form.email} onChange={e => update('email', e.target.value)}/></label><label>Current stage<select value={form.education} onChange={e => update('education', e.target.value)}><option>High school student</option><option>Undergraduate student</option><option>Recent graduate</option><option>Working professional</option><option>Career switcher</option><option>Exploring options</option></select></label><label>Preferred language<select value={form.language} onChange={e => { update('language', e.target.value); if (e.target.value !== 'Other') update('customLanguage', ''); }}><option>English</option><option>Hindi</option><option>Telugu</option><option>Tamil</option><option>Kannada</option><option>Malayalam</option><option>Bengali</option><option>Marathi</option><option>Urdu</option><option>Punjabi</option><option>Gujarati</option><option>Spanish</option><option>French</option><option>German</option><option>Portuguese</option><option>Japanese</option><option>Korean</option><option>Chinese</option><option>Arabic</option><option>Russian</option><option>Other</option></select></label>{form.language === 'Other' && <label>Language name<input value={form.customLanguage || ''} onChange={e => update('customLanguage', e.target.value)} placeholder="Your preferred resource language" maxLength={50}/></label>}
+    <div className="profile-form-grid"><label>Full name<input value={form.name} onChange={e => update('name', e.target.value)} maxLength={60}/></label><label>Email address <span className="optional-label">Optional</span><input type="email" value={form.email} onChange={e => update('email', e.target.value)}/></label><label>Current stage<select value={form.education} onChange={e => update('education', e.target.value)}><option>High school student</option><option>Undergraduate student</option><option>Recent graduate</option><option>Working professional</option><option>Career switcher</option><option>Exploring options</option></select></label><label>Preferred language<select value={form.language} onChange={e => update('language', e.target.value)}><option>Telugu</option><option>Hindi</option><option>English</option></select></label>
     <label className="wide-field">Career goal<select value={form.goalId} onChange={e => update('goalId', e.target.value)}>{choices.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}<option value="custom">Something else — custom goal</option></select></label>{form.goalId === 'custom' && <label className="wide-field">Describe your goal<input value={form.customGoal} onChange={e => update('customGoal', e.target.value)} placeholder="What would you like to become?" maxLength={100}/></label>}
 <details className="profile-optional-details"><summary>More personalisation settings (optional)</summary><div className="profile-form-grid nested-profile-grid">    <label className="wide-field">Interests<input value={form.interests || ''} onChange={e => update('interests', e.target.value)} placeholder="Topics, industries, activities, problems you care about" maxLength={240}/></label><label className="wide-field">Motivation<input value={form.motivation || ''} onChange={e => update('motivation', e.target.value)} placeholder="What do you want this career to help you achieve?" maxLength={240}/></label><label className="wide-field">Current skills<input value={form.currentSkills || ''} onChange={e => update('currentSkills', e.target.value)} placeholder="Tools, topics or experience you already have" maxLength={240}/></label><label className="wide-field">Dream project or target outcome<input value={form.dreamProject || ''} onChange={e => update('dreamProject', e.target.value)} placeholder="What would you love to build or achieve?" maxLength={240}/></label>
     <label>Current skill level<select value={form.experience} onChange={e => update('experience', e.target.value)}><option>Beginner</option><option>Some experience</option><option>Intermediate</option></select></label><label>Learning style<select value={form.learningStyle || 'Hands-on projects'} onChange={e => update('learningStyle', e.target.value)}><option>Hands-on projects</option><option>Videos first</option><option>Reading and notes</option><option>Practice questions</option><option>A balanced mix</option></select></label><label>Hours available per week<select value={form.hoursPerWeek || '5'} onChange={e => update('hoursPerWeek', e.target.value)}><option value="3">3 hours</option><option value="5">5 hours</option><option value="7">7 hours</option><option value="10">10 hours</option><option value="14">14+ hours</option></select></label><label>Target timeline<select value={form.timelineMonths || '4'} onChange={e => update('timelineMonths', e.target.value)}><option value="3">3 months</option><option value="4">4 months</option><option value="6">6 months</option><option value="9">9 months</option><option value="12">12 months</option></select></label></div></details></div>
@@ -445,7 +440,7 @@ function LessonModal({ path, lesson, progress, plan, profile, onClose, onComplet
   }
   const resourceUrl = lesson.resourceUrl || `https://www.google.com/search?q=${encodeURIComponent(`${lesson.title} ${path.title} official learning resource`)}`;
   const language = profile?.language || 'English';
-  const videoUrl = lesson.youtubeUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(`${lesson.title} ${path.title} tutorial in ${language}`)}&hl=${encodeURIComponent(({English:'en',Hindi:'hi',Telugu:'te',Tamil:'ta',Kannada:'kn',Malayalam:'ml',Bengali:'bn',Marathi:'mr',Urdu:'ur',Punjabi:'pa',Gujarati:'gu',Spanish:'es',French:'fr',German:'de',Portuguese:'pt',Japanese:'ja',Korean:'ko',Chinese:'zh-Hans',Arabic:'ar',Russian:'ru'})[language] || 'en')}&gl=IN`;
+  const videoUrl = lesson.youtubeUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(`${lesson.title} ${path.title} tutorial in ${language}`)}&hl=${encodeURIComponent(({Telugu:'te',Hindi:'hi',English:'en'})[language] || 'en')}&gl=IN`;
   const mmss = value => `${Math.floor(Math.max(0, value) / 60).toString().padStart(2, '0')}:${(Math.max(0, value) % 60).toString().padStart(2, '0')}`;
   const assessmentQuestions = quiz && <AssignmentQuestions quiz={quiz} answers={answers} onSelect={selectAnswer} />;
   return <div className="modal-backdrop" role="presentation" onMouseDown={e => { if (e.target === e.currentTarget && !activeRef.current) handleClose(); }}>
@@ -508,18 +503,23 @@ export default function App() {
   function toggleTheme() { setTheme(old => old === 'dark' ? 'light' : 'dark'); }
 
   async function buildRoadmap(nextProfile) {
+    const normalizedProfile = {
+      ...nextProfile,
+      language: RESOURCE_LANGUAGES.includes(nextProfile.language) ? nextProfile.language : 'English',
+      customLanguage: '',
+    };
     let response;
     try {
       response = await fetch(`${API_BASE_URL}/api/generate-roadmap`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profile: nextProfile }),
+        body: JSON.stringify({ profile: normalizedProfile }),
       });
     } catch {
       throw new Error('Could not reach the PathPilot backend. Start both servers with npm.cmd run dev:all, then try again.');
     }
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.roadmap?.lessons?.length) throw new Error(data.error || 'The backend could not create your roadmap. Check server configuration and try again.');
-    return { profile: { ...nextProfile, generatedRoadmap: data.roadmap, roadmapMode: data.mode || data.roadmap.generatedBy || 'personalized-fallback', roadmapVersion: 2 }, notice: data.notice || '' };
+    return { profile: { ...normalizedProfile, generatedRoadmap: data.roadmap, roadmapMode: data.mode || data.roadmap.generatedBy || 'personalized-fallback', roadmapVersion: 4 }, notice: data.notice || '' };
   }
 
   useEffect(() => {
@@ -537,7 +537,7 @@ export default function App() {
         if (alive) notify(error?.message || 'Could not refresh the roadmap. Check that the backend is running.');
       } finally { if (alive) setGeneratingRoadmap(false); }
     };
-    const hasCurrentRoadmap = Number(profile.roadmapVersion || 0) >= 2 && profile.generatedRoadmap?.lessons?.length;
+    const hasCurrentRoadmap = Number(profile.roadmapVersion || 0) >= 4 && profile.generatedRoadmap?.lessons?.length;
     if (!hasCurrentRoadmap) {
       void generate(profile);
     } else if (profile.roadmapMode === 'personalized-fallback') {
@@ -637,13 +637,13 @@ export default function App() {
     const key = profile.goalId === 'custom' ? `custom:${wordSlug(profile.customGoal)}` : profile.goalId;
     if (savedPaths.some(item => item.key === key)) { notify('This learning path is already saved.'); return; }
     if (currentPlan.tier !== 'pro' && savedPaths.length >= 1) { setUpgradeOpen(true); notify('Free includes one saved path. Pro unlocks multiple saved paths.'); return; }
-    const item = { key, goalId: profile.goalId, customGoal: profile.customGoal || '', label: goalLabel(profile, path), title: path.title, icon: path.icon, color: path.color, generatedRoadmap: path, roadmapVersion: profile.roadmapVersion || 2, savedAt: new Date().toISOString() };
+    const item = { key, goalId: profile.goalId, customGoal: profile.customGoal || '', label: goalLabel(profile, path), title: path.title, icon: path.icon, color: path.color, generatedRoadmap: path, roadmapVersion: profile.roadmapVersion || 4, savedAt: new Date().toISOString() };
     const next = [...savedPaths, item]; setSavedPaths(next); writeSavedPaths(next); notify('Learning path saved to your collection.');
   }
   async function openSavedPath(item) {
     const base = { ...profile, goalId: item.goalId, customGoal: item.customGoal || '' };
-    if (Number(item.roadmapVersion || 0) >= 2 && item.generatedRoadmap?.lessons?.length) {
-      const next = { ...base, generatedRoadmap: item.generatedRoadmap, roadmapMode: item.generatedRoadmap.generatedBy || 'ai', roadmapVersion: 2 };
+    if (Number(item.roadmapVersion || 0) >= 4 && item.generatedRoadmap?.lessons?.length) {
+      const next = { ...base, generatedRoadmap: item.generatedRoadmap, roadmapMode: item.generatedRoadmap.generatedBy || 'ai', roadmapVersion: 4 };
       writeProfile(next); setProfile(next); setActive('roadmap'); notify(`Opened ${item.label}.`);
       return;
     }
@@ -651,7 +651,7 @@ export default function App() {
     try {
       const result = await buildRoadmap({ ...base, generatedRoadmap: undefined, roadmapMode: undefined });
       writeProfile(result.profile); setProfile(result.profile); setActive('roadmap');
-      const refreshed = savedPaths.map(saved => saved.key === item.key ? { ...saved, generatedRoadmap: result.profile.generatedRoadmap, roadmapVersion: 2 } : saved);
+      const refreshed = savedPaths.map(saved => saved.key === item.key ? { ...saved, generatedRoadmap: result.profile.generatedRoadmap, roadmapVersion: 4 } : saved);
       setSavedPaths(refreshed); writeSavedPaths(refreshed);
       notify(result.notice || `Rebuilt ${item.label} using your current learning profile.`);
     } catch (error) {

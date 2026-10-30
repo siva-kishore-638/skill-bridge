@@ -4,9 +4,9 @@ PathPilot is a mobile-first learning platform that asks only for the essentials 
 
 ## Latest changes
 
-- **Short onboarding:** asks for a preferred learning-resource language, career goal, starting level and available time. Name, interests and existing skills are optional personalisation details.
+- **Short onboarding:** asks for a preferred learning-resource language (Telugu, Hindi or English), career goal, starting level and available time. Name, interests and existing skills are optional personalisation details.
 - **Backend-generated adaptive roadmap:** `/api/generate-roadmap` uses Groq on the backend when `GROQ_API_KEY` is configured. Topic selection, sequence, examples, duration and a final practical outcome are generated for the learner. If the AI provider is not configured or temporarily fails, an adaptive backend-built starter path keeps the app usable and clearly labels the fallback; it does not silently use a fixed client-side path.
-- **Language-aware YouTube resources:** every topic asks the backend for a YouTube resource in the selected language. With `YOUTUBE_API_KEY`, it looks up video candidates using YouTube Data API `relevanceLanguage`, a language-specific query and India region preferences, then prefers title/description matches for the selected writing system when available. Without that optional key, it opens a YouTube search URL explicitly targeted to the selected language. Search relevance is best-effort; YouTube can still return videos in other languages.
+- **Role- and language-aware YouTube resources:** each lesson search uses the lesson title, skills and selected career role. With `YOUTUBE_API_KEY`, candidate videos are ranked against the lesson and role, checked against YouTube video-language metadata or the selected writing system, and retried in English when no relevant match is available. Without the key, PathPilot opens a role- and topic-specific YouTube search page; YouTube may still show other languages or unrelated results.
 - **Dynamic MCQ assessment:** every topic requests a fresh five-question assessment from the backend. Groq generates new wording/scenarios for each attempt when configured; fallback quizzes vary scenarios and answer ordering. Previously seen questions are sent to the generator to reduce repeats.
 - **Fullscreen timed assessments:** the learner must explicitly start an assessment in browser fullscreen. The backend holds correct answers and grades submissions, so answers/explanations are not sent to the client until submit. Topic difficulty and the individual questions determine the timer. Leaving fullscreen, switching away from the page, or losing page visibility stops the assessment; that attempt is abandoned without a score, and the learner must request a fresh set. Copy/context-menu keyboard shortcuts are restricted during the active attempt. This discourages casual copying but is not a substitute for a fully proctored exam system.
 - **Server-side quiz lifecycle:** `/api/start-quiz`, `/api/submit-quiz` and `/api/abandon-quiz` record assessment lifecycle on the Express process and enforce the timer at submission.
@@ -36,7 +36,7 @@ Or double-click `start-windows.bat` in File Explorer. It installs npm dependenci
 
 Open <http://localhost:5173>. Keep the terminal open during use. The frontend uses port `5173`; the backend API uses port `8787`.
 
-Check API status at <http://localhost:8787/api/health>. It reports whether AI, YouTube lookup and payments are configured without exposing keys, plus the number of Groq keys loaded.
+Check API status at <http://localhost:8787/api/health>. It reports whether AI, YouTube lookup and payments are configured without exposing keys, plus the number of Groq keys loaded. `youtubeApiStatus` starts as `not-checked` and changes after a roadmap video lookup; `youtubeApiErrorCode` helps identify invalid restrictions or quota issues.
 
 ### Fixing a CORS error (“Origin is not allowed by PathPilot API CORS settings”)
 
@@ -94,7 +94,7 @@ If no Groq key is configured or Groq temporarily fails, PathPilot keeps working 
 YOUTUBE_API_KEY=your_youtube_api_key_here
 ```
 
-The API uses the video's search query plus `relevanceLanguage` and `regionCode=IN`. YouTube provides relevance bias, not a strict language filter, so no search API can guarantee every returned video is in the chosen language. If no YouTube key is configured, PathPilot links to a language-specific YouTube search result page. Official reference: <https://developers.google.com/youtube/v3/docs/search/list>.
+The API search combines each lesson topic, skills and selected role with `relevanceLanguage` and `regionCode=IN`. PathPilot checks candidate relevance and available language metadata; if no relevant video in the requested language is found, it searches English. YouTube does not guarantee language metadata for every upload, so some videos may still need review. Without the key, PathPilot opens a role- and topic-specific search page rather than selecting a specific video. Official reference: <https://developers.google.com/youtube/v3/docs/search/list>.
 
 ### Razorpay (optional)
 

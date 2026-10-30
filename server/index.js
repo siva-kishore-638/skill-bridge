@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import crypto from 'node:crypto';
-import { createPersonalizedRoadmap, createTopicQuiz, getGroqConfigStatus } from './ai.js';
+import { createPersonalizedRoadmap, createTopicQuiz, getGroqConfigStatus, getYoutubeConfigStatus } from './ai.js';
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
@@ -120,13 +120,16 @@ function quizFeedback(storedQuiz, answers, expired) {
 
 app.get('/api/health', (_req, res) => {
   const groqStatus = getGroqConfigStatus();
+  const youtubeStatus = getYoutubeConfigStatus();
   res.json({
     ok: true,
     service: 'PathPilot API',
     aiProvider: 'groq',
     aiConfigured: groqStatus.configured,
     aiKeyCount: groqStatus.keyCount,
-    youtubeApiConfigured: Boolean(process.env.YOUTUBE_API_KEY),
+    youtubeApiConfigured: youtubeStatus.configured,
+    youtubeApiStatus: youtubeStatus.status,
+    youtubeApiErrorCode: youtubeStatus.errorCode,
     paymentsConfigured: paymentsConfigured(),
   });
 });
@@ -139,8 +142,8 @@ app.post('/api/generate-roadmap', async (req, res) => {
       name: String(raw.name || 'Learner').slice(0, 60),
       email: String(raw.email || '').slice(0, 160),
       education: String(raw.education || '').slice(0, 80),
-      language: String(raw.language || 'English').slice(0, 50),
-      customLanguage: String(raw.customLanguage || '').slice(0, 50),
+      language: ['Telugu', 'Hindi', 'English'].includes(String(raw.language)) ? String(raw.language) : 'English',
+      customLanguage: '',
       goalId: String(raw.goalId || 'custom').slice(0, 80),
       customGoal: String(raw.customGoal || '').slice(0, 120),
       experience: String(raw.experience || 'Beginner').slice(0, 60),

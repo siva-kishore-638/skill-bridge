@@ -120,23 +120,6 @@ const LANGUAGES = {
   English: { code: 'en', locale: 'English', script: null },
   Hindi: { code: 'hi', locale: 'Hindi', script: /[\u0900-\u097F]/ },
   Telugu: { code: 'te', locale: 'Telugu', script: /[\u0C00-\u0C7F]/ },
-  Tamil: { code: 'ta', locale: 'Tamil', script: /[\u0B80-\u0BFF]/ },
-  Kannada: { code: 'kn', locale: 'Kannada', script: /[\u0C80-\u0CFF]/ },
-  Malayalam: { code: 'ml', locale: 'Malayalam', script: /[\u0D00-\u0D7F]/ },
-  Bengali: { code: 'bn', locale: 'Bengali', script: /[\u0980-\u09FF]/ },
-  Marathi: { code: 'mr', locale: 'Marathi', script: /[\u0900-\u097F]/ },
-  Urdu: { code: 'ur', locale: 'Urdu', script: /[\u0600-\u06FF]/ },
-  Punjabi: { code: 'pa', locale: 'Punjabi', script: /[\u0A00-\u0A7F]/ },
-  Gujarati: { code: 'gu', locale: 'Gujarati', script: /[\u0A80-\u0AFF]/ },
-  Spanish: { code: 'es', locale: 'Spanish', script: null },
-  French: { code: 'fr', locale: 'French', script: null },
-  German: { code: 'de', locale: 'German', script: null },
-  Portuguese: { code: 'pt', locale: 'Portuguese', script: null },
-  Japanese: { code: 'ja', locale: 'Japanese', script: /[\u3040-\u30FF\u4E00-\u9FFF]/ },
-  Korean: { code: 'ko', locale: 'Korean', script: /[\uAC00-\uD7AF]/ },
-  Chinese: { code: 'zh-Hans', locale: 'Chinese', script: /[\u4E00-\u9FFF]/ },
-  Arabic: { code: 'ar', locale: 'Arabic', script: /[\u0600-\u06FF]/ },
-  Russian: { code: 'ru', locale: 'Russian', script: /[\u0400-\u04FF]/ },
 };
 const ICONS = ['Code2', 'Layers3', 'BarChart3', 'BrainCircuit', 'ShieldCheck', 'PanelsTopLeft', 'Target', 'Megaphone', 'Cloud', 'Compass'];
 const COLORS = ['violet', 'blue', 'mint', 'peach', 'pink'];
@@ -146,16 +129,16 @@ const clean = (value, max = 500) => String(value ?? '').trim().slice(0, max);
 
 function selectedLanguage(profile = {}) {
   const label = clean(profile.language || 'English', 50);
-  if (label === 'Other') return clean(profile.customLanguage || 'English', 50) || 'English';
-  return label;
+  return LANGUAGES[label] ? label : 'English';
 }
 function languageInfo(label) {
   return LANGUAGES[label] || { code: 'en', locale: label, script: null, fallbackOnly: true };
 }
-function youtubeSearchUrl(topic, goal, language = 'English') {
+function youtubeSearchUrl(topic, goal, language = 'English', skills = [], searchQuery = '') {
   const lang = selectedLanguage({ language });
   const info = languageInfo(lang);
-  const phrase = encodeURIComponent(`${topic} ${goal} tutorial explained in ${lang}`);
+  const concept = videoConceptQuery(topic, skills, searchQuery);
+  const phrase = encodeURIComponent(`${concept} ${goal} tutorial in ${lang}`);
   return `https://www.youtube.com/results?search_query=${phrase}&hl=${encodeURIComponent(info.code)}&gl=IN`;
 }
 function onlineSearchUrl(topic, goal, language = 'English') {
@@ -422,44 +405,152 @@ export async function generateWithGroq(prompt, config = {}) {
   throw new Error(`Groq request failed with all ${apiKeys.length} configured API key(s): ${failures.join(' | ')}`);
 }
 
-async function findYoutubeVideo(topic, goal, language) {
+const VIDEO_STOP_WORDS = new Set('a an and are as at be beginner by for from how in into of on or the to tutorial tutorials with your learn learning course explained fundamentals basics introduction'.split(' '));
+const VIDEO_TOOL_ANCHORS = [
+  'power bi', 'tableau', 'looker studio', 'google analytics', 'google ads', 'meta ads',
+  'google sheets', 'microsoft excel', 'excel', 'sql server', 'postgresql', 'mysql', 'sqlite',
+  'sql', 'pandas', 'python', 'r programming', 'javascript', 'typescript', 'react native', 'react',
+  'node js', 'express js', 'html', 'css', 'figma', 'amazon web services', 'aws', 'azure',
+  'google cloud', 'docker', 'kubernetes', 'tensorflow', 'pytorch', 'apache spark', 'spark',
+  'salesforce', 'hubspot', 'linux', 'github', 'git',
+];
+const NON_ENGLISH_TITLE = /\b(?:arabic|bengali|chinese|french|german|hindi|japanese|kannada|korean|malayalam|marathi|portuguese|punjabi|russian|spanish|tamil|telugu|urdu|in\s+español)\b/i;
+const NON_LATIN_TITLE_SCRIPT = /[\u0600-\u06FF\u0400-\u04FF\u0900-\u0D7F\u3040-\u30FF\u3400-\u9FFF\uAC00-\uD7AF]/;
+let youtubeApiLastStatus = 'not-checked';
+let youtubeApiLastErrorCode = null;
+export function getYoutubeConfigStatus() {
+  return {
+    configured: Boolean(process.env.YOUTUBE_API_KEY),
+    status: process.env.YOUTUBE_API_KEY ? youtubeApiLastStatus : 'not-configured',
+    errorCode: youtubeApiLastErrorCode,
+  };
+}
+function videoTokens(value = '') {
+  const stem = (word) => {
+    if (word.length > 5 && word.endsWith('ies')) return `${word.slice(0, -3)}y`;
+    if (word.length > 6 && word.endsWith('ical')) return word.slice(0, -2);
+    if (word.length > 6 && word.endsWith('ing')) {
+      const base = word.slice(0, -3);
+      return base.length > 3 && base.at(-1) === base.at(-2) ? base.slice(0, -1) : base;
+    }
+    if (word.length > 5 && word.endsWith('ed')) return word.slice(0, -2);
+    if (word.length > 4 && word.endsWith('s') && !word.endsWith('ss')) return word.slice(0, -1);
+    return word;
+  };
+  return [...new Set(terms(value).split(/\s+/).map(stem).filter((word) => (word.length > 2 || word === 'bi') && !VIDEO_STOP_WORDS.has(word)))];
+}
+function videoConceptQuery(topic, skills = [], searchQuery = '') {
+  return clean(searchQuery || [topic, ...skills.slice(0, 2)].join(' '), 180);
+}
+function videoRelevance(item, topic, goal, skills = [], searchQuery = '') {
+  const title = terms(item.snippet?.title || '');
+  const description = terms(item.snippet?.description || '');
+  const titleTokens = new Set(videoTokens(title));
+  const descriptionTokens = new Set(videoTokens(description));
+  const scoreGroup = (tokens) => tokens.length
+    ? (tokens.filter((word) => titleTokens.has(word)).length / tokens.length) * 0.75
+      + (tokens.filter((word) => descriptionTokens.has(word)).length / tokens.length) * 0.25
+    : 0;
+  return scoreGroup(videoTokens(topic)) * 0.35
+    + scoreGroup(videoTokens(skills.join(' '))) * 0.25
+    + scoreGroup(videoTokens(goal)) * 0.1
+    + scoreGroup(videoTokens(searchQuery)) * 0.3;
+}
+function matchesVideoLanguage(item, language, info) {
+  const snippet = item.snippet || {};
+  const languageCode = String(snippet.defaultAudioLanguage || snippet.defaultLanguage || '').toLowerCase();
+  const title = String(snippet.title || '');
+  if (info.code === 'en' && (NON_ENGLISH_TITLE.test(title) || NON_LATIN_TITLE_SCRIPT.test(title))) return false;
+  if (languageCode) return languageCode === info.code.toLowerCase() || languageCode.startsWith(`${info.code.toLowerCase()}-`);
+  const text = `${title} ${snippet.description || ''}`;
+  if (info.fallbackOnly) return false;
+  if (info.script) return info.script.test(text);
+  // For Latin-script languages YouTube often omits language metadata. Trust its locale bias and language-specific query.
+  return true;
+}
+function matchesRequiredTools(item, topic, skills, searchQuery) {
+  const titleText = terms(topic);
+  const queryText = terms(searchQuery);
+  const videoTitle = terms(item.snippet?.title || '');
+  const required = [...new Set(VIDEO_TOOL_ANCHORS.filter((tool) => titleText.includes(tool) || queryText.includes(tool)))];
+  return required.every((tool) => videoTitle.includes(tool));
+}
+async function searchYoutubeCandidates(topic, goal, skills, language, searchQuery = '') {
   const info = languageInfo(language);
-  const fallbackUrl = youtubeSearchUrl(topic, goal, language);
+  const conceptQuery = videoConceptQuery(topic, skills, searchQuery);
+  const query = [conceptQuery, goal, language, 'tutorial'].filter(Boolean).join(' ');
+  const params = new URLSearchParams({
+    part: 'snippet', q: query, type: 'video', maxResults: '10', relevanceLanguage: info.code,
+    regionCode: 'IN', safeSearch: 'strict', key: process.env.YOUTUBE_API_KEY,
+  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?${params}`, { signal: controller.signal });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(data?.error?.message || `YouTube API returned ${response.status}`);
+      error.youtubeStatus = 'api-error';
+      error.youtubeErrorCode = data?.error?.errors?.[0]?.reason || `http-${response.status}`;
+      youtubeApiLastStatus = error.youtubeStatus;
+      youtubeApiLastErrorCode = error.youtubeErrorCode;
+      throw error;
+    }
+    const items = (Array.isArray(data.items) ? data.items : [])
+      .filter((item) => item.id?.videoId)
+      .map((item) => ({ item, score: videoRelevance(item, topic, goal, skills, conceptQuery) }))
+      .filter(({ score }) => score >= 0.22)
+      .sort((a, b) => b.score - a.score);
+    if (items.length) {
+      const detailParams = new URLSearchParams({
+        part: 'snippet', id: items.map(({ item }) => item.id.videoId).join(','), key: process.env.YOUTUBE_API_KEY,
+      });
+      const detailController = new AbortController();
+      const detailTimeout = setTimeout(() => detailController.abort(), 2500);
+      try {
+        const detailResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?${detailParams}`, { signal: detailController.signal });
+        const details = await detailResponse.json().catch(() => ({}));
+        if (detailResponse.ok && Array.isArray(details.items)) {
+          const byId = new Map(details.items.map((item) => [item.id, item.snippet]));
+          for (const candidate of items) candidate.item.snippet = { ...candidate.item.snippet, ...byId.get(candidate.item.id.videoId) };
+        }
+      } catch { /* Search results remain usable when the supplemental language metadata call fails. */ }
+      finally { clearTimeout(detailTimeout); }
+    }
+    return items;
+  } finally { clearTimeout(timeout); }
+}
+async function findYoutubeVideo(topic, goal, language, skills = [], searchQuery = '') {
+  const fallbackUrl = youtubeSearchUrl(topic, goal, language, skills, searchQuery);
   const apiKey = process.env.YOUTUBE_API_KEY;
   if (!apiKey) return { url: fallbackUrl, title: `${topic} — ${language} YouTube search` };
   try {
-    const params = new URLSearchParams({
-      part: 'snippet', q: `${topic} ${goal} tutorial explained in ${language}`, type: 'video', maxResults: '10',
-      relevanceLanguage: info.code, regionCode: 'IN', safeSearch: 'strict', key: apiKey,
-    });
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-    let data;
-    try {
-      const response = await fetch(`https://www.googleapis.com/youtube/v3/search?${params}`, { signal: controller.signal });
-      data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data?.error?.message || `YouTube API returned ${response.status}`);
-    } finally { clearTimeout(timeout); }
-    const items = Array.isArray(data.items) ? data.items : [];
-    if (!items.length) return { url: fallbackUrl, title: `${topic} — ${language} YouTube search` };
-    const scriptMatch = info.script ? items.find((item) => info.script.test(`${item.snippet?.title || ''} ${item.snippet?.description || ''}`)) : null;
-    const languageTextMatch = items.find((item) => new RegExp(`\\b${language.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(`${item.snippet?.title || ''} ${item.snippet?.description || ''}`));
-    const chosen = scriptMatch || languageTextMatch || (info.code === 'en' && !info.fallbackOnly ? items[0] : null);
-    const videoId = chosen.id?.videoId;
-    if (!videoId) return { url: fallbackUrl, title: `${topic} — ${language} YouTube search` };
-    return { url: `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`, title: clean(chosen.snippet?.title || topic, 160) };
+    const info = languageInfo(language);
+    let candidates = await searchYoutubeCandidates(topic, goal, skills, language, searchQuery);
+    let chosen = candidates.find(({ item }) => matchesVideoLanguage(item, language, info)
+      && matchesRequiredTools(item, topic, skills, searchQuery));
+    if (!chosen && (info.code !== 'en' || info.fallbackOnly)) {
+      candidates = await searchYoutubeCandidates(topic, goal, skills, 'English', searchQuery);
+      chosen = candidates.find(({ item }) => matchesRequiredTools(item, topic, skills, searchQuery));
+    }
+    const videoId = chosen?.item.id?.videoId;
+    youtubeApiLastStatus = 'ok';
+    youtubeApiLastErrorCode = null;
+    if (!videoId) return { url: youtubeSearchUrl(topic, goal, 'English', skills, searchQuery), title: `${topic} — English YouTube search` };
+    return { url: `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`, title: clean(chosen.item.snippet?.title || topic, 160) };
   } catch (error) {
-    console.warn('YouTube lookup failed; using language-targeted search:', error.message);
+    youtubeApiLastStatus = error.youtubeStatus || 'request-failed';
+    youtubeApiLastErrorCode = error.youtubeErrorCode || (error.name === 'AbortError' ? 'timeout' : 'network-error');
+    console.warn('YouTube lookup failed; using a role- and topic-targeted search:', error.message);
     return { url: fallbackUrl, title: `${topic} — ${language} YouTube search` };
   }
 }
 async function addLanguageMatchedVideos(lessons, goal, language) {
   return Promise.all(lessons.map(async (lesson) => {
-    const video = await findYoutubeVideo(lesson.title, goal, language);
+    const video = await findYoutubeVideo(lesson.title, goal, language, lesson.skills || [], lesson.videoSearchQuery || '');
     return { ...lesson, youtubeUrl: video.url, videoTitle: video.title };
   }));
 }
-
 export async function createPersonalizedRoadmap(profile = {}) {
   const fallback = makeFallbackRoadmap(profile);
   const language = selectedLanguage(profile);
@@ -477,9 +568,9 @@ export async function createPersonalizedRoadmap(profile = {}) {
     learningStyle: clean(profile.learningStyle, 80), hoursPerWeek: Math.max(1, Number(profile.hoursPerWeek) || 5),
     targetTimelineMonths: Math.max(1, Number(profile.timelineMonths) || 4),
   };
-  const prompt = `You are a career-learning architect. Generate a genuinely new roadmap for this individual; do not copy any seed curriculum or standard role template. Use the learner's goal, starting skill, interests, motivation, project idea, language, weekly time and timeline to choose and order the topics. Omit or compress topics they already know, introduce missing prerequisites, connect examples to interests, and end with a role-relevant practical outcome. The list must not be the same for all people choosing the same role. Keep the question-asking burden low: work only from the profile supplied.
+  const prompt = `You are a career-learning architect. Generate a genuinely new roadmap for this individual; do not copy any seed curriculum or standard role template. Use the learner's goal, starting skill, interests, motivation, project idea, language, weekly time and timeline to choose and order the topics. Omit or compress topics they already know, introduce missing prerequisites, connect examples to interests, and end with a role-relevant practical outcome. The list must not be the same for all people choosing the same role. Keep the question-asking burden low: work only from the profile supplied. Build a detailed but manageable syllabus where every lesson teaches one important, clearly named skill in depth, has prerequisites in the right order, and leads to practical mastery of the selected role. Avoid broad or vague titles such as career skills, introduction to technology, or build a project; name concrete concepts, tools, methods, and role-specific outcomes so a learner can find an exact instructional video. Each lesson should be a focused module with 2-5 concrete skills, a clear explanation, practice and an assessment context. For each lesson include videoSearchQuery: a concise 4-8 word YouTube query naming its exact topic and one or two key skills; keep it specific to this role, do not write a sentence, and do not add a language because the server appends it.
 LEARNER PROFILE JSON: ${JSON.stringify(learner)}
-Create exactly ${desiredCount} topics (between 6 and 10), ordered as a learning progression. Assign each to one of four phases: Foundations, Core skills, Applied practice, Portfolio and next steps. Fit the scope to the timeline and weekly hours. Write roadmap and topic descriptions in clear English, but all YouTube links/titles must target videos taught in ${language}; include that language in the video search query when uncertain. Prefer trustworthy, relevant online reading resources. Return only JSON: {"title":string,"shortTitle":string,"category":string,"icon":string,"color":string,"tagline":string,"description":string,"lessons":[{"title":string,"duration":string,"description":string,"videoTitle":string,"youtubeUrl":string,"skills":[string,string,string],"practice":string,"resourceLabel":string,"resourceUrl":string,"phase":string,"difficulty":"beginner|intermediate|advanced","quizContext":string}]}. Exactly ${desiredCount} lessons. Use safe HTTPS URLs only. Do not invent video IDs; a YouTube search results URL is acceptable. Icons must be from [${ICONS.join(', ')}] and color from [${COLORS.join(', ')}].`;
+Create exactly ${desiredCount} topics (between 6 and 10), ordered as a learning progression. Assign each to one of four phases: Foundations, Core skills, Applied practice, Portfolio and next steps. Fit the scope to the timeline and weekly hours. Write roadmap and topic descriptions in clear English, but all YouTube links/titles must target videos taught in ${language}; provide videoSearchQuery with the precise concept and role-specific skill to make the video search unambiguous. Prefer trustworthy, relevant online reading resources. Return only JSON: {"title":string,"shortTitle":string,"category":string,"icon":string,"color":string,"tagline":string,"description":string,"lessons":[{"title":string,"duration":string,"description":string,"videoTitle":string,"videoSearchQuery":string,"youtubeUrl":string,"skills":[string,string,string],"practice":string,"resourceLabel":string,"resourceUrl":string,"phase":string,"difficulty":"beginner|intermediate|advanced","quizContext":string}]}. Exactly ${desiredCount} lessons. Use safe HTTPS URLs only. Do not invent video IDs; a YouTube search results URL is acceptable. Icons must be from [${ICONS.join(', ')}] and color from [${COLORS.join(', ')}].`;
 
   try {
     const generated = await generateWithGroq(prompt, { temperature: 0.7, maxOutputTokens: 8500 });
@@ -496,6 +587,7 @@ Create exactly ${desiredCount} topics (between 6 and 10), ordered as a learning 
         duration: clean(lesson.duration || fallback.lessons[index].duration, 40),
         description: clean(lesson.description || fallback.lessons[index].description, 800),
         skills: Array.isArray(lesson.skills) ? lesson.skills.slice(0, 5).map((item) => clean(item, 80)).filter(Boolean) : fallback.lessons[index].skills,
+        videoSearchQuery: clean(lesson.videoSearchQuery || `${title} ${(Array.isArray(lesson.skills) ? lesson.skills : fallback.lessons[index].skills).slice(0, 2).join(' ')}`, 180),
         practice: clean(lesson.practice || fallback.lessons[index].practice, 800),
         resourceLabel: clean(lesson.resourceLabel || 'Online reading & reference', 100),
         resourceUrl: safeResourceUrl(lesson.resourceUrl, title, generated.title || goal, language),
@@ -505,7 +597,7 @@ Create exactly ${desiredCount} topics (between 6 and 10), ordered as a learning 
       };
     });
     const title = clean(generated.title || goal, 120);
-    const matchedLessons = await addLanguageMatchedVideos(normalizedLessons, title, language);
+    const matchedLessons = await addLanguageMatchedVideos(normalizedLessons, goal, language);
     return {
       mode: 'ai',
       roadmap: {
